@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domino's Manaus</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0060A9;min-height:100vh;padding:0 0 3rem}
+.top{padding:2.5rem 1.5rem 2rem;text-align:center}
+.logo-wrap{background:#fff;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.brand{color:#fff;font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:4px}
+.sub{color:rgba(255,255,255,.75);font-size:13px}
+.hours-pill{background:rgba(255,255,255,.15);color:#fff;font-size:12px;display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;margin-top:.75rem}
+.dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.section{padding:0 1.25rem;margin-bottom:1rem}
+.section-label{color:rgba(255,255,255,.6);font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:.6rem;padding:0 4px}
+.link-btn{display:flex;align-items:center;gap:12px;background:#fff;color:#0060A9;text-decoration:none;border-radius:14px;padding:.9rem 1.1rem;margin-bottom:.6rem;font-size:15px;font-weight:600;transition:transform .15s,background .15s}
+.link-btn:active{transform:scale(.97);background:#f0f4ff}
+.link-btn .icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.icon-wa{background:#25D36622;color:#128C7E}
+.icon-ig{background:#E1306C22;color:#E1306C}
+.link-btn .text{flex:1}
+.link-btn .text small{display:block;font-size:11px;color:#888;font-weight:400;margin-top:1px}
+.link-btn .arrow{color:#ccc;font-size:18px}
+.cardapio-toggle{display:flex;align-items:center;gap:12px;background:#E31837;color:#fff;text-decoration:none;border-radius:14px;padding:.9rem 1.1rem;margin-bottom:.6rem;font-size:15px;font-weight:600;cursor:pointer;border:none;width:100%;transition:transform .15s}
+.cardapio-toggle:active{transform:scale(.97)}
+.cardapio-toggle .icon{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cardapio-toggle .text{flex:1;text-align:left}
+.cardapio-toggle .text small{display:block;font-size:11px;opacity:.75;font-weight:400;margin-top:1px}
+.cardapio-toggle .arrow{font-size:18px;transition:transform .3s}
+.cardapio-toggle.open .arrow{transform:rotate(90deg)}
+.cardapio-panel{display:none;background:rgba(255,255,255,.08);border-radius:12px;margin-bottom:.6rem;overflow:hidden}
+.cardapio-panel.open{display:block}
+.cat-tabs{display:flex;overflow-x:auto;gap:0;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.1)}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tab{border:none;background:none;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;padding:.65rem .9rem;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0}
+.cat-tab.active{color:#fff;border-bottom-color:#fff}
+.cat-content{display:none;padding:.75rem}
+.cat-content.active{display:block}
+.sizes-note{color:rgba(255,255,255,.6);font-size:11px;line-height:1.6;margin-bottom:.75rem;padding:.5rem .75rem;background:rgba(0,0,0,.15);border-radius:8px}
+.pizza-item{display:flex;justify-content:space-between;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.pizza-item:last-child{border-bottom:none}
+.pizza-name{color:#fff;font-size:13px;font-weight:600;margin-bottom:2px}
+.pizza-desc{color:rgba(255,255,255,.6);font-size:11px;line-height:1.4}
+.pizza-price{color:#fff;font-size:12px;font-weight:600;white-space:nowrap;padding-left:8px;padding-top:2px;text-align:right}
+.combos-grid{display:grid;gap:.5rem;padding:.75rem}
+.combo-card{background:rgba(0,0,0,.2);border-radius:10px;padding:.75rem;display:flex;justify-content:space-between;align-items:center}
+.combo-tag{background:#E31837;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:4px}
+.combo-name{color:#fff;font-size:13px;font-weight:600}
+.combo-desc{color:rgba(255,255,255,.6);font-size:11px}
+.combo-price{color:#fff;font-size:18px;font-weight:700;white-space:nowrap}
+.combo-from{color:rgba(255,255,255,.6);font-size:10px;text-align:right}
+.footer{text-align:center;padding:1.5rem 1rem 0;color:rgba(255,255,255,.45);font-size:11px}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo-wrap">
+    <svg viewBox="0 0 52 52" width="52" height="52"><circle cx="26" cy="26" r="26" fill="#0060A9"/><circle cx="26" cy="26" r="19" fill="#E31837"/><text x="26" y="22" text-anchor="middle" font-size="7" font-weight="900" font-family="Arial" fill="#fff">DOMINO'S</text><text x="26" y="32" text-anchor="middle" font-size="7" font-weight="900" font-family="Arial" fill="#fff">PIZZA</text></svg>
+  </div>
+  <div class="brand">Domino's Pizza Manaus</div>
+  <div class="sub">A maior pizzaria do mundo</div>
+  <div class="hours-pill"><span class="dot"></span> Aberto todos os dias &bull; 17h &agrave;s 23h</div>
+</div>
+
+<div class="section">
+  <div class="section-label">Pedir agora</div>
+  <a href="https://wa.me/5592993521563" class="link-btn">
+    <div class="icon icon-wa">&#128241;</div>
+    <div class="text">Vieiralves<small>Rua Rio Jutai, 173</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+  <a href="https://wa.me/5592992501056" class="link-btn">
+    <div class="icon icon-wa">&#128241;</div>
+    <div class="text">Aleixo<small>Av. Ephig&ecirc;nio Salles, 2145</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+  <a href="https://wa.me/5592991242828" class="link-btn">
+    <div class="icon icon-wa">&#128241;</div>
+    <div class="text">Parque 10<small>Rua Alexandre Magno, 110</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+  <a href="https://wa.me/5592995118566" class="link-btn">
+    <div class="icon icon-wa">&#128241;</div>
+    <div class="text">Ponta Negra<small>Av. Coronel Teixeira, 9555</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+</div>
+
+<div class="section">
+  <div class="section-label">Card&aacute;pio</div>
+  <button class="cardapio-toggle" id="cardapioBtn" onclick="toggleCardapio()">
+    <div class="icon">&#127829;</div>
+    <div class="text">Ver card&aacute;pio completo<small>Pizzas, sobremesas e combos</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </button>
+  <div class="cardapio-panel" id="cardapioPanel">
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="showCat('mais',this)">&#11088; Mais pedidas</button>
+      <button class="cat-tab" onclick="showCat('classicas',this)">Cl&aacute;ssicas</button>
+      <button class="cat-tab" onclick="showCat('especiais',this)">Especiais</button>
+      <button class="cat-tab" onclick="showCat('sobremesas',this)">Sobremesas</button>
+      <button class="cat-tab" onclick="showCat('acomp',this)">Acompanhamentos</button>
+      <button class="cat-tab" onclick="showCat('combos',this)">Combos</button>
+    </div>
+    <div id="cat-mais" class="cat-content active">
+      <div class="sizes-note">Brotinho R$38,90 &middot; M&eacute;dia R$77,50 &middot; Grande R$90,50 &middot; Giga R$100,50<br>Massa: tradicional, fina, super fina ou pan (+R$5) &middot; Borda recheada +R$13</div>
+      <div class="pizza-item"><div><div class="pizza-name">Queijo</div><div class="pizza-desc">Queijo.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pepperoni</div><div class="pizza-desc">Queijo e pepperoni.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Calabresa</div><div class="pizza-desc">Queijo, calabresa e cebola.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Margherita</div><div class="pizza-desc">Queijo, tomate e manjeric&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">3 Queijos</div><div class="pizza-desc">Queijo, requeij&atilde;o e parm&atilde;o ralado.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Frango c/ Requeij&atilde;o Especial</div><div class="pizza-desc">Frango desfiado, cebola e requeij&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$38,90</div></div>
+    </div>
+    <div id="cat-classicas" class="cat-content">
+      <div class="sizes-note">Brotinho R$42,90 &middot; M&eacute;dia R$85,50 &middot; Grande R$98,50 &middot; Giga R$108,50</div>
+      <div class="pizza-item"><div><div class="pizza-name">Cheddar e Bacon</div><div class="pizza-desc">Queijo, molho cheddar, bacon e or&eacute;gano.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Cheddar e Pepperoni</div><div class="pizza-desc">Queijo, molho cheddar, pepperoni e or&eacute;gano.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Napolitana</div><div class="pizza-desc">Queijo, tomate e parm&atilde;o ralado.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Corn &amp; Bacon</div><div class="pizza-desc">Queijo, bacon e milho.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">4 Queijos</div><div class="pizza-desc">Queijo, parm&atilde;o, requeij&atilde;o e queijo azul.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Catuperoni</div><div class="pizza-desc">Queijo, pepperoni, requeij&atilde;o e parm&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">P&atilde;o de Alho</div><div class="pizza-desc">Queijo, p&atilde;o ciabatta, pasta de alho e parm&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Frango Caipira</div><div class="pizza-desc">Queijo, frango desfiado, milho e Catupiry&reg;.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Veggie&reg;</div><div class="pizza-desc">Queijo, azeitona preta, champignon, cebola e piment&atilde;o verde.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Portuguesa</div><div class="pizza-desc">Queijo, cebola, azeitona preta, piment&atilde;o, ovo de codorna e presunto.</div></div><div class="pizza-price">a partir de<br>R$42,90</div></div>
+    </div>
+    <div id="cat-especiais" class="cat-content">
+      <div class="sizes-note">Brotinho R$45,90 &middot; M&eacute;dia R$95,90 &middot; Grande R$108,90 &middot; Giga R$118,90</div>
+      <div class="pizza-item"><div><div class="pizza-name">Pepperrock&reg;</div><div class="pizza-desc">Queijo, pepperoni, azeitona preta, parm&atilde;o, alho granulado e cream cheese.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Extravaganzza&reg;</div><div class="pizza-desc">Queijo, azeitona preta, champignon, pepperoni, piment&atilde;o, cebola e presunto.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">La Bianca</div><div class="pizza-desc">Queijo de vaca e b&uacute;fala, requeij&atilde;o, parm&atilde;o e manjeric&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Meat &amp; Bacon</div><div class="pizza-desc">Queijo, bacon, calabresa, pepperoni e presunto.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Calabresa Especial</div><div class="pizza-desc">Queijo, calabresa, cebola, azeitona preta e cream cheese.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Egg &amp; Bacon</div><div class="pizza-desc">Queijo, bacon, cebola, cream cheese e ovo de codorna.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Frango Grelhado</div><div class="pizza-desc">Queijo, frango, requeij&atilde;o, tomate, azeitona preta e manjeric&atilde;o.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Frango c/ Cream Cheese</div><div class="pizza-desc">Queijo, frango, cream cheese e parm&atilde;o ralado.</div></div><div class="pizza-price">a partir de<br>R$45,90</div></div>
+    </div>
+    <div id="cat-sobremesas" class="cat-content">
+      <div class="pizza-item"><div><div class="pizza-name">Canela Bites</div><div class="pizza-desc">Massa pan com a&ccedil;&uacute;car, canela e 4 op&ccedil;&otilde;es de cobertura.</div></div><div class="pizza-price">R$31,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de Churros</div><div class="pizza-desc">Doce de leite, a&ccedil;&uacute;car e canela.</div></div><div class="pizza-price">R$31,90&ndash;71,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de Brigadeiro</div><div class="pizza-desc">Creme de baunilha, brigadeiro e granulado.</div></div><div class="pizza-price">R$31,90&ndash;71,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de Nutella&reg;</div><div class="pizza-desc">Recheada de Nutella&reg;.</div></div><div class="pizza-price">R$31,90&ndash;71,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de M&amp;M's&reg;</div><div class="pizza-desc">Creme de baunilha, brigadeiro e M&amp;M's&reg;.</div></div><div class="pizza-price">R$31,90&ndash;61,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de Ovomaltine&reg;</div><div class="pizza-desc">Creme de baunilha e Ovomaltine&reg;.</div></div><div class="pizza-price">R$31,90&ndash;61,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Pizza de Doce de Leite</div><div class="pizza-desc">Coberta com doce de leite.</div></div><div class="pizza-price">R$31,90&ndash;71,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Chocobread</div><div class="pizza-desc">Recheado de brigadeiro, coberto com creme de baunilha e granulado.</div></div><div class="pizza-price">R$31,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Churrosbread</div><div class="pizza-desc">Recheado de doce de leite, coberto de a&ccedil;&uacute;car e canela.</div></div><div class="pizza-price">R$31,90</div></div>
+    </div>
+    <div id="cat-acomp" class="cat-content">
+      <div class="pizza-item"><div><div class="pizza-name">Cheddar Volcano</div><div class="pizza-desc">Queijo e molho cheddar.</div></div><div class="pizza-price">R$40,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Alho Roll (4 un.)</div><div class="pizza-desc">Massa pan com pasta de alho e parm&atilde;o.</div></div><div class="pizza-price">R$20,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Alho Roll (8 un.)</div><div class="pizza-desc">Massa pan com pasta de alho e parm&atilde;o.</div></div><div class="pizza-price">R$30,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Chicken Roll (4 un.)</div><div class="pizza-desc">Frango, queijo, chipotle e parm&atilde;o.</div></div><div class="pizza-price">R$20,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Chicken Roll (8 un.)</div><div class="pizza-desc">Frango, queijo, chipotle e parm&atilde;o.</div></div><div class="pizza-price">R$30,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Cheesebreads</div><div class="pizza-desc">Margherita, 4 queijos ou calabresa.</div></div><div class="pizza-price">R$30,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Calzones</div><div class="pizza-desc">Queijo &amp; presunto, 3 queijos, margherita ou frango c/ requeij&atilde;o.</div></div><div class="pizza-price">R$17,50</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Molhos Salgados</div><div class="pizza-desc">Consulte os sabores.</div></div><div class="pizza-price">R$10,90</div></div>
+      <div class="pizza-item"><div><div class="pizza-name">Molhos Doces</div><div class="pizza-desc">Consulte os sabores.</div></div><div class="pizza-price">R$12,90</div></div>
+    </div>
+    <div id="cat-combos" class="cat-content">
+      <div class="combos-grid">
+        <div class="combo-card"><div><div class="combo-tag">COMBO 1</div><div class="combo-name">1 Pizza M&eacute;dia + Refri 500ml</div><div class="combo-desc">Para 2 pessoas</div></div><div><div class="combo-from">a partir de</div><div class="combo-price">R$51,90</div></div></div>
+        <div class="combo-card"><div><div class="combo-tag">COMBO 2</div><div class="combo-name">1 Pizza Grande + Refri 2L</div><div class="combo-desc">Para 3 pessoas</div></div><div><div class="combo-from">a partir de</div><div class="combo-price">R$66,90</div></div></div>
+        <div class="combo-card"><div><div class="combo-tag">COMBO 3</div><div class="combo-name">1 Pizza Giga + Refri 2L</div><div class="combo-desc">Para 4 pessoas</div></div><div><div class="combo-from">a partir de</div><div class="combo-price">R$76,90</div></div></div>
+        <div class="combo-card"><div><div class="combo-tag">COMBO 4</div><div class="combo-name">2 Pizzas Grandes + Refri 2L</div><div class="combo-desc">Para 6 pessoas</div></div><div><div class="combo-from">a partir de</div><div class="combo-price">R$116,90</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Siga a gente</div>
+  <a href="https://instagram.com/dominosmanaus" class="link-btn">
+    <div class="icon icon-ig">&#128247;</div>
+    <div class="text">@dominosmanaus<small>Novidades, promo&ccedil;&otilde;es e muito mais</small></div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+</div>
+
+<div class="footer">Domino's Pizza Manaus &nbsp;&middot;&nbsp; Delivery 17h&ndash;23h todos os dias</div>
+
+<script>
+function toggleCardapio(){
+  var btn=document.getElementById('cardapioBtn');
+  var panel=document.getElementById('cardapioPanel');
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+}
+function showCat(id,el){
+  document.querySelectorAll('.cat-content').forEach(function(c){c.classList.remove('active')});
+  document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('cat-'+id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
